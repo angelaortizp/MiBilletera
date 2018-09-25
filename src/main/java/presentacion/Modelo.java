@@ -23,6 +23,7 @@ import logica.LogicaPrincipalI;
 import presentacion.panel.PanelCuentas;
 import presentacion.panel.PanelCrearCuenta;
 import presentacion.panel.PanelCrearMovimiento;
+import presentacion.panel.PanelGraficoTorta;
 import presentacion.panel.PanelMovimientos;
 import presentacion.panel.PanelReporteCategoria;
 import presentacion.panel.PanelReporteIngVsEgr;
@@ -299,6 +300,12 @@ public class Modelo {
             panelReporteIngVsEgr.getjTextFieldIngresos().setText(ingEgr.get(0).getSumatoria());
 
             panelReporteIngVsEgr.getjTextFieldEgresos().setText(ingEgr.get(1).getSumatoria());
+            
+            PanelGraficoTorta panelGraficoTorta = (PanelGraficoTorta)panelReporteIngVsEgr.getjPanelGraficoTorta();
+            List<Double> values = new ArrayList<Double>();
+            values.add( Double.valueOf( ingEgr.get(0).getSumatoria() ) );
+            values.add( Double.valueOf( ingEgr.get(1).getSumatoria() ) );
+            panelGraficoTorta.setValues(values);
 
         } catch (Throwable t) {
             this.vista.showDialog("Upps!!!", "Ocurrio un error inesperado de tipo: " + t.getLocalizedMessage(), JOptionPane.ERROR_MESSAGE);

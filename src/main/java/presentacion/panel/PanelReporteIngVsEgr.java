@@ -5,6 +5,7 @@
  */
 package presentacion.panel;
 
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import presentacion.Vista;
 
@@ -34,30 +35,39 @@ public class PanelReporteIngVsEgr extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldIngresos = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldEgresos = new javax.swing.JTextField();
+        jPanelGraficoTorta = new PanelGraficoTorta();
+
+        setLayout(new java.awt.BorderLayout());
 
         jLabel1.setText("Ingresos");
-        add(jLabel1);
+        jPanel1.add(jLabel1);
 
         jTextFieldIngresos.setColumns(15);
         jTextFieldIngresos.setText("0");
-        add(jTextFieldIngresos);
+        jPanel1.add(jTextFieldIngresos);
 
         jLabel2.setText("Egresos");
-        add(jLabel2);
+        jPanel1.add(jLabel2);
 
         jTextFieldEgresos.setColumns(15);
         jTextFieldEgresos.setText("0");
-        add(jTextFieldEgresos);
+        jPanel1.add(jTextFieldEgresos);
+
+        add(jPanel1, java.awt.BorderLayout.NORTH);
+        add(jPanelGraficoTorta, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelGraficoTorta;
     private javax.swing.JTextField jTextFieldEgresos;
     private javax.swing.JTextField jTextFieldIngresos;
     // End of variables declaration//GEN-END:variables
@@ -68,6 +78,10 @@ public class PanelReporteIngVsEgr extends javax.swing.JPanel {
 
     public JTextField getjTextFieldIngresos() {
         return jTextFieldIngresos;
+    }
+
+    public JPanel getjPanelGraficoTorta() {
+        return jPanelGraficoTorta;
     }
 
     
