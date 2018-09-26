@@ -32,6 +32,7 @@ public class PanelGraficoTorta extends JPanel{
         this.values = values;
     }
     
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);       
         int size   = Math.min( this.getWidth(), this.getHeight() );
@@ -46,16 +47,14 @@ public class PanelGraficoTorta extends JPanel{
                 cienPorCiento += Math.abs( value );
             }
             int aInicial = 0;
-            int aActual  = 0;            
+            int aActual  = 1;            
             Random random = new Random();            
             for(Double value : this.values){                                
-                aActual = (int)((360d*Math.abs( value )/cienPorCiento));                
-                if(aInicial == 0 ){
-                    aActual+=1;
-                }
+                aActual += (int)((360d*Math.abs( value )/cienPorCiento));                                
                 g.setColor( new Color(Math.abs( random.nextInt()%255), Math.abs( random.nextInt()%255), Math.abs( random.nextInt()%255)) );
                 g.fillArc(border+(this.getWidth()-size)/2, border+(this.getHeight()-size)/2, size-2*border, size-2*border, aInicial, aActual);                
                 aInicial += aActual;
+                aActual  =  0;
             }
         }
         

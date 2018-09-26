@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -61,6 +62,9 @@ public class PanelReportePeriodo extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jPanelGraficoLineas = new PanelGraficoLineas();
+
+        setLayout(new java.awt.BorderLayout());
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -75,16 +79,17 @@ public class PanelReportePeriodo extends javax.swing.JPanel {
         jButton1.addActionListener(this.vista.getControlador());
         jPanel1.add(jButton1);
 
-        add(jPanel1);
+        add(jPanel1, java.awt.BorderLayout.NORTH);
 
-        jPanel2.setLayout(new javax.swing.OverlayLayout(jPanel2));
+        jPanel2.setLayout(new java.awt.GridLayout(0, 1));
 
         jTable1.setModel(this.reporteModel);
         jScrollPane1.setViewportView(jTable1);
 
         jPanel2.add(jScrollPane1);
+        jPanel2.add(jPanelGraficoLineas);
 
-        add(jPanel2);
+        add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -92,6 +97,7 @@ public class PanelReportePeriodo extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelGraficoLineas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextFieldFechaFinal;
@@ -104,6 +110,10 @@ public class PanelReportePeriodo extends javax.swing.JPanel {
 
     public JTextField getjTextFieldFechaInicial() {
         return jTextFieldFechaInicial;
+    }
+
+    public JPanel getjPanelGraficoLineas() {
+        return jPanelGraficoLineas;
     }
 
     
