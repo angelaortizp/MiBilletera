@@ -61,14 +61,20 @@ public class PanelGraficoLineas extends JPanel{
             Long valueX, oldValueX = null;
             Double valueY, oldValueY = null;            
             Random random = new Random();  
+            //Eje horizontal
+            valueY = this.getHeight() - ((this.getHeight()-2*border)/(maxY-minY))*(-minY)+border;
+            g.setColor(Color.BLACK);
+            g.drawLine(border, valueY.intValue(), this.getWidth()-2*border, valueY.intValue());
             for( int index = 0; index < this.valuesX.size(); index++ ){
                 valueX = this.valuesX.get(index).getTime();
                 valueY = this.valuesY.get(index);
                 /**
                  * Y = ((b-a)/(max-min))*(X-min)+a
                  */                
-                valueX = (((this.getWidth()-6*border)-0)/(maxX-minX))*(valueX-minX)+3*border;
-                valueY = (((this.getHeight()-6*border)-0)/(maxY-minY))*(valueY-minY)+3*border;
+                valueX = (((this.getWidth()-2*border)-0)/(maxX-minX))*(valueX-minX)+border;
+                valueY = (((this.getHeight()-2*border)-0)/(maxY-minY))*(valueY-minY)+border;
+                //Y se invierte por el tema de la pantalla
+                valueY = this.getHeight()-valueY;
                 g.setColor( new Color(Math.abs( random.nextInt()%255), Math.abs( random.nextInt()%255), Math.abs( random.nextInt()%255)) );
                 if( oldValueX != null && oldValueY != null ){
                    g.drawLine(oldValueX.intValue(), oldValueY.intValue(), valueX.intValue(), valueY.intValue());
