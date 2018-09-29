@@ -5,7 +5,7 @@
  */
 package presentacion.panel;
 
-import entidades.Movimiento;
+import logica.entidades.Movimiento;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;

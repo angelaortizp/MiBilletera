@@ -5,7 +5,7 @@
  */
 package presentacion.panel;
 
-import entidades.TipoCuenta;
+import logica.entidades.TipoCuenta;
 import javax.swing.DefaultComboBoxModel;
 import presentacion.Eventos;
 import presentacion.Modelo;

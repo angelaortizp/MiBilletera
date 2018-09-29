@@ -5,9 +5,9 @@
  */
 package presentacion.panel;
 
-import entidades.CategoriaMovimiento;
-import entidades.Movimiento;
-import entidades.TipoCategoria;
+import logica.entidades.CategoriaMovimiento;
+import logica.entidades.Movimiento;
+import logica.entidades.TipoCategoria;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;

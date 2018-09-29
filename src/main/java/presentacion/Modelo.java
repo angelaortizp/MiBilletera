@@ -5,12 +5,12 @@
  */
 package presentacion;
 
-import entidades.CategoriaMovimiento;
-import entidades.Cuenta;
-import entidades.IngresosVsEgresos;
-import entidades.Movimiento;
-import entidades.TipoCategoria;
-import entidades.TipoCuenta;
+import logica.entidades.CategoriaMovimiento;
+import logica.entidades.Cuenta;
+import logica.entidades.IngresosVsEgresos;
+import logica.entidades.Movimiento;
+import logica.entidades.TipoCategoria;
+import logica.entidades.TipoCuenta;
 import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.JOptionPane;
 import logica.LogicaPrincipal;
 import logica.LogicaPrincipalI;

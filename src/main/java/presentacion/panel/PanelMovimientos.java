@@ -5,8 +5,8 @@
  */
 package presentacion.panel;
 
-import entidades.Cuenta;
-import entidades.Movimiento;
+import logica.entidades.Cuenta;
+import logica.entidades.Movimiento;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
