@@ -216,6 +216,9 @@ public class Modelo {
                 ActionEvent actionEvent = new ActionEvent(panelCrearMovimiento.getjComboBoxTipoCategoria(), 0, "test");
                 panelCrearMovimiento.getjComboBoxCategoria().actionPerformed(actionEvent);
 
+                //Seleccionar la categoria recien creada
+                panelCrearMovimiento.getjComboBoxCategoria().setSelectedItem(newCategoriaMovimiento);
+
             }
         } catch (Throwable t) {
             this.vista.showDialog("Upps!!!", "Ocurrio un error inesperado de tipo: " + t.getLocalizedMessage(), JOptionPane.ERROR_MESSAGE);
@@ -282,27 +285,29 @@ public class Modelo {
             } catch (Exception e) {
                 this.vista.showDialog("Error de validación", "Ingrese la fecha final en formato dd/MM/YYYY", JOptionPane.WARNING_MESSAGE);
                 return;
-            }            
+            }
             panelReportePeriodo.refrescar(fechaInicial, fechaFinal);
-            
+
             List<Date> valuesX = new ArrayList<Date>();
-            List<Double> valuesY = new ArrayList<Double>();            
+            List<Double> valuesY = new ArrayList<Double>();
             Calendar calendar = Calendar.getInstance();
-            for( Movimiento movimiento : this.obtenerMovimientoPorPeriodo(fechaInicial, fechaFinal) ){
+            for (Movimiento movimiento : this.obtenerMovimientoPorPeriodo(fechaInicial, fechaFinal)) {
                 /**
-                 * BUGFIX: Como alguien decidio que las transacciones no llevan hora minuto segundo
-                 * toca hacer una maña para garantizar que el grafico se vea bien
-                 * */
+                 * BUGFIX: Como alguien decidio que las transacciones no llevan
+                 * hora minuto segundo toca hacer una maña para garantizar que
+                 * el grafico se vea bien
+                 *
+                 */
                 calendar.setTime(movimiento.getFechaDate());
                 calendar.add(Calendar.MILLISECOND, movimiento.getId());
                 valuesX.add(calendar.getTime());
                 valuesY.add(movimiento.getValor());
             }
-            
-            PanelGraficoLineas panelGraficoLineas = (PanelGraficoLineas)panelReportePeriodo.getjPanelGraficoLineas();
-            panelGraficoLineas.setValues(valuesX, valuesY);                  
+
+            PanelGraficoLineas panelGraficoLineas = (PanelGraficoLineas) panelReportePeriodo.getjPanelGraficoLineas();
+            panelGraficoLineas.setValues(valuesX, valuesY);
             panelGraficoLineas.updateUI();
-            
+
         } catch (Throwable t) {
             this.vista.showDialog("Upps!!!", "Ocurrio un error inesperado de tipo: " + t.getLocalizedMessage(), JOptionPane.ERROR_MESSAGE);
         }
@@ -320,11 +325,11 @@ public class Modelo {
             panelReporteIngVsEgr.getjTextFieldIngresos().setText(ingEgr.get(0).getSumatoria());
 
             panelReporteIngVsEgr.getjTextFieldEgresos().setText(ingEgr.get(1).getSumatoria());
-            
-            PanelGraficoTorta panelGraficoTorta = (PanelGraficoTorta)panelReporteIngVsEgr.getjPanelGraficoTorta();
+
+            PanelGraficoTorta panelGraficoTorta = (PanelGraficoTorta) panelReporteIngVsEgr.getjPanelGraficoTorta();
             List<Double> values = new ArrayList<Double>();
-            values.add( Double.valueOf( ingEgr.get(0).getSumatoria() ) );
-            values.add( Double.valueOf( ingEgr.get(1).getSumatoria() ) );
+            values.add(Double.valueOf(ingEgr.get(0).getSumatoria()));
+            values.add(Double.valueOf(ingEgr.get(1).getSumatoria()));
             panelGraficoTorta.setValues(values);
 
         } catch (Throwable t) {
