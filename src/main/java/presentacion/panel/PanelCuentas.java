@@ -5,7 +5,7 @@
  */
 package presentacion.panel;
 
-import entidades.Cuenta;
+import logica.entidades.Cuenta;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;

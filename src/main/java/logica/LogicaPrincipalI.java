@@ -5,11 +5,11 @@
  */
 package logica;
 
-import entidades.CategoriaMovimiento;
-import entidades.Cuenta;
-import entidades.IngresosVsEgresos;
-import entidades.Movimiento;
-import entidades.TipoCategoria;
+import logica.entidades.CategoriaMovimiento;
+import logica.entidades.Cuenta;
+import logica.entidades.IngresosVsEgresos;
+import logica.entidades.Movimiento;
+import logica.entidades.TipoCategoria;
 import java.util.Date;
 import java.util.List;
 

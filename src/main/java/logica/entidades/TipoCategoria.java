@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entidades;
+package logica.entidades;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -30,13 +28,19 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author usuario
  */
 @Entity
-@Table(name = "categoriaMovimiento")
+@Table(name = "tipoCategoria")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CategoriaMovimiento.findAll", query = "SELECT c FROM CategoriaMovimiento c")})
-public class CategoriaMovimiento implements Serializable {
+    @NamedQuery(name = "TipoCategoria.findAll", query = "SELECT t FROM TipoCategoria t")})
+public class TipoCategoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    
+    public static final int INGRESO       = 1;
+    public static final int EGRESO        = 2;
+    public static final int TRANSFERENCIA = 3;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -47,22 +51,17 @@ public class CategoriaMovimiento implements Serializable {
     @Size(min = 1, max = 2000000000)
     @Column(name = "nombre")
     private String nombre;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategoriaMovimiento")
-    private List<Movimiento> movimientoList;
-    
-    @JoinColumn(name = "idTipoCategoria", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private TipoCategoria idTipoCategoria;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoCategoria")
+    private List<CategoriaMovimiento> categoriaMovimientoList;
 
-    public CategoriaMovimiento() {
+    public TipoCategoria() {
     }
 
-    public CategoriaMovimiento(Integer id) {
+    public TipoCategoria(Integer id) {
         this.id = id;
     }
 
-    public CategoriaMovimiento(Integer id, String nombre) {
+    public TipoCategoria(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -84,20 +83,12 @@ public class CategoriaMovimiento implements Serializable {
     }
 
     @XmlTransient
-    public List<Movimiento> getMovimientoList() {
-        return movimientoList;
+    public List<CategoriaMovimiento> getCategoriaMovimientoList() {
+        return categoriaMovimientoList;
     }
 
-    public void setMovimientoList(List<Movimiento> movimientoList) {
-        this.movimientoList = movimientoList;
-    }
-
-    public TipoCategoria getIdTipoCategoria() {
-        return idTipoCategoria;
-    }
-
-    public void setIdTipoCategoria(TipoCategoria idTipoCategoria) {
-        this.idTipoCategoria = idTipoCategoria;
+    public void setCategoriaMovimientoList(List<CategoriaMovimiento> categoriaMovimientoList) {
+        this.categoriaMovimientoList = categoriaMovimientoList;
     }
 
     @Override
@@ -110,10 +101,10 @@ public class CategoriaMovimiento implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CategoriaMovimiento)) {
+        if (!(object instanceof TipoCategoria)) {
             return false;
         }
-        CategoriaMovimiento other = (CategoriaMovimiento) object;
+        TipoCategoria other = (TipoCategoria) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -122,7 +113,7 @@ public class CategoriaMovimiento implements Serializable {
 
     @Override
     public String toString() {
-        return this.nombre;
+        return this.getNombre();
     }
     
 }

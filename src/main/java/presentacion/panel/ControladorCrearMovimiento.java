@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package presentacion;
+package presentacion.panel;
 
+import presentacion.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,11 +13,11 @@ import java.awt.event.ActionListener;
  *
  * @author Estudiantes
  */
-public class Controlador implements ActionListener {
+public class ControladorCrearMovimiento implements ActionListener {
 
-    private final Vista vista;
+    private final PanelCrearMovimiento vista;
 
-    public Controlador(Vista aThis) {
+    public ControladorCrearMovimiento(PanelCrearMovimiento aThis) {
         vista = aThis;
     }
 
@@ -25,8 +26,16 @@ public class Controlador implements ActionListener {
         Eventos evento = Eventos.valueOf(actionEvent.getActionCommand());
         if (evento != null) {
             switch (evento) {
-                case CALCULAR_REPORTE_INGVSEGR: {
-                    this.vista.getModelo().calcularReporteIngVsEgr();
+                case CREAR_CATEGORIA: {
+                    this.vista.getModelo().crearCategoria();
+                }
+                break;
+                case CREAR_MOVIMIENTO: {
+                    this.vista.getModelo().crearMovimiento();
+                }
+                break;
+                case comboBoxEdited: {
+                    this.vista.getModelo().crearCategoria();
                 }
                 break;
             }
