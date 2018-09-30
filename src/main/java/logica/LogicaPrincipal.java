@@ -5,11 +5,20 @@ import logica.entidades.Cuenta;
 import logica.entidades.IngresosVsEgresos;
 import logica.entidades.Movimiento;
 import logica.entidades.TipoCategoria;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import persistencia.Persistencia;
-import utilidades.UtilidadesFecha;
+import persistencia.dao.implement.CategoriaMovimientoDao;
+import persistencia.dao.CategoriaMovimientoDaoI;
+import persistencia.dao.implement.CuentaDao;
+import persistencia.implement.Persistencia;
+import persistencia.dao.CuentaDaoI;
+import persistencia.dao.implement.IngresosVsEgresosDao;
+import persistencia.dao.IngresosVsEgresosDaoI;
+import persistencia.dao.implement.MovimientoDao;
+import persistencia.dao.MovimientoDaoI;
+import persistencia.PersistenciaI;
+import persistencia.dao.implement.TipoCategoriaDao;
+import persistencia.dao.TipoCategoriaDaoI;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,7 +31,12 @@ import utilidades.UtilidadesFecha;
  */
 public class LogicaPrincipal implements LogicaPrincipalI {
 
-    private Persistencia persistencia;
+    private PersistenciaI persistencia;
+    private CuentaDaoI cuentaDAO;
+    private TipoCategoriaDaoI tipoCategoriaDao;
+    private CategoriaMovimientoDaoI categoriaMovimientoDao;
+    private MovimientoDaoI movimientoDao;
+    private IngresosVsEgresosDaoI ingresosVsEgresosDao;
 
     @Override
     public void conectarABaseDeDatos() {
@@ -30,139 +44,122 @@ public class LogicaPrincipal implements LogicaPrincipalI {
         getPersistencia().connect();
     }
 
-    public Persistencia getPersistencia() {
+    public PersistenciaI getPersistencia() {
         if (persistencia == null) {
             persistencia = new Persistencia();
         }
         return persistencia;
     }
 
+    public CuentaDaoI getCuentaDAO() {
+        if (cuentaDAO == null) {
+            cuentaDAO = new CuentaDao();
+        }
+        return cuentaDAO;
+    }
+
+    public TipoCategoriaDaoI getTipoCategoriaDAO() {
+        if (tipoCategoriaDao == null) {
+            tipoCategoriaDao = new TipoCategoriaDao();
+        }
+        return tipoCategoriaDao;
+    }
+
+    public CategoriaMovimientoDaoI getCategoriaMovimientoDAO() {
+        if (categoriaMovimientoDao == null) {
+            categoriaMovimientoDao = new CategoriaMovimientoDao();
+        }
+        return categoriaMovimientoDao;
+    }
+
+    public MovimientoDaoI getMovimientoDAO() {
+        if (movimientoDao == null) {
+            movimientoDao = new MovimientoDao();
+        }
+        return movimientoDao;
+    }
+
+    public IngresosVsEgresosDaoI getIngresosVsEgresosDAO() {
+        if (ingresosVsEgresosDao == null) {
+            ingresosVsEgresosDao = new IngresosVsEgresosDao();
+        }
+        return ingresosVsEgresosDao;
+    }
+
     @Override
     public void crearCuenta(Cuenta cuenta) {
-        getPersistencia().crear(cuenta);
+        getCuentaDAO().crearCuenta(cuenta);
     }
 
     @Override
     public void editarCuenta(Cuenta cuenta) {
-        getPersistencia().editar(cuenta);
+        getCuentaDAO().editarCuenta(cuenta);
     }
 
     @Override
     public List<Cuenta> obtenerListaCuenta() {
-        return getPersistencia().buscarPorConsultaNativa(
-                "SELECT * FROM CUENTA", Cuenta.class);
+        return getCuentaDAO().obtenerListaCuenta();
     }
 
     @Override
     public Cuenta obtenerCuentaPorId(int id) {
-        List<Cuenta> cuentaList = getPersistencia().buscarPorConsultaNativa(
-                "SELECT * FROM CUENTA WHERE ID = ?", Cuenta.class, id);
-        if (cuentaList != null && !cuentaList.isEmpty()) {
-            return cuentaList.get(0);
-        }
-        return null;
+        return getCuentaDAO().obtenerCuentaPorId(id);
     }
 
     @Override
     public List<TipoCategoria> obtenerTipoCategoriaList() {
-        return getPersistencia().buscarPorConsultaNativa(
-                "SELECT * FROM tipoCategoria", TipoCategoria.class);
+        return getTipoCategoriaDAO().obtenerTipoCategoriaList();
+    }
+
+    @Override
+    public List<CategoriaMovimiento> obtenerCategoriaMovimientoList(TipoCategoria tipoCategoria) {
+        return getCategoriaMovimientoDAO().obtenerCategoriaMovimientoList(tipoCategoria);
     }
 
     @Override
     public void crearCategoria(CategoriaMovimiento categoria) {
-        getPersistencia().crear(categoria);
+        getCategoriaMovimientoDAO().crearCategoria(categoria);
     }
 
     @Override
     public void editarCategoria(CategoriaMovimiento categoria) {
-        getPersistencia().editar(categoria);
+        getCategoriaMovimientoDAO().editarCategoria(categoria);
 
     }
 
     @Override
     public CategoriaMovimiento obtenerCategoriaPorNombre(String nombreCategoria) {
-        List<CategoriaMovimiento> categoriaMovimientoList = getPersistencia().buscarPorConsultaNativa(
-                "SELECT * FROM categoriaMovimiento WHERE nombre = ? ",
-                CategoriaMovimiento.class, nombreCategoria);
-        if (categoriaMovimientoList != null && !categoriaMovimientoList.isEmpty()) {
-            return categoriaMovimientoList.get(0);
-        }
-        return null;
+        return getCategoriaMovimientoDAO().obtenerCategoriaPorNombre(nombreCategoria);
     }
 
     @Override
     public void crearMovimiento(Movimiento movimiento) {
-        getPersistencia().crear(movimiento);
+        getMovimientoDAO().crearMovimiento(movimiento);
     }
 
     @Override
     public List<Movimiento> obtenerMovimientosPorCuenta(int idCuenta) {
-        /**
-         * Modifique el query nativo, ya que este metodo debe traer los
-         * movimientos asociados a una cuenta, no necesita la información de la
-         * cuenta pues ya la tiene.. porque quueries nativos?
-         */
-        return getPersistencia().buscarPorConsultaNativa(
-                "SELECT * FROM MOVIMIENTO M WHERE M.idCuenta = ? ",
-                Movimiento.class, idCuenta);
+        return getMovimientoDAO().obtenerMovimientosPorCuenta(idCuenta);
     }
 
     @Override
     public List<Movimiento> obtenerMovimientoPorPeriodo(Date fechaInicial, Date fechaFinal) {
-
-        String DateInicial = UtilidadesFecha.obtenerStringPorDate(fechaInicial);
-        String DateFinal = UtilidadesFecha.obtenerStringPorDate(fechaFinal);
-
-        List<Movimiento> movimientosPeriodo = getPersistencia().buscarPorConsultaNativa(
-                "SELECT * FROM MOVIMIENTO WHERE FECHA between ? AND ? ",
-                Movimiento.class, DateInicial, DateFinal);
-
-        return movimientosPeriodo;
-
+        return getMovimientoDAO().obtenerMovimientoPorPeriodo(fechaInicial, fechaFinal);
     }
 
     @Override
     public List<Movimiento> obtenerMovimientoPorCategoria(Integer idCategoria) {
-        return getPersistencia().buscarPorConsultaNativa(
-                "SELECT * FROM movimiento WHERE idCategoriaMovimiento = ?",
-                Movimiento.class, idCategoria);
+        return getMovimientoDAO().obtenerMovimientoPorCategoria(idCategoria);
     }
 
     @Override
     public List<Movimiento> obtenerMovimientoPorTipo(Integer idTipo) {
-        return getPersistencia().buscarPorConsultaNativa(
-                "SELECT m.* FROM movimiento m \n"
-                + "INNER JOIN categoriaMovimiento cm \n"
-                + "on (m.idCategoriaMovimiento = cm.id)\n"
-                + "INNER JOIN tipoCategoria tc \n"
-                + "on (cm.idTipoCategoria = tc.id)\n"
-                + "WHERE tc.id = ?",
-                Movimiento.class, idTipo);
+        return getMovimientoDAO().obtenerMovimientoPorTipo(idTipo);
     }
 
     @Override
     public List<IngresosVsEgresos> obtenerIngresosEgresos() {
-        List<Object[]> objectList = getPersistencia().buscarPorConsultaNativa(
-                "select * from IngresosVsEgresos", null);
-        List<IngresosVsEgresos> ingresosVsEgresosList = new ArrayList<>();
-        for (Object[] o : objectList) {
-            if (o.length > 2) {
-                IngresosVsEgresos ive = new IngresosVsEgresos();
-                ive.setId((Integer) o[0]);
-                ive.setNombre((String) o[1]);
-                ive.setSumatoria(((Integer) o[2]).toString());
-                ingresosVsEgresosList.add(ive);
-            }
-
-        }
-        return ingresosVsEgresosList;
-    }
-
-    @Override
-    public List<CategoriaMovimiento> obtenerCategoriaMovimientoList(TipoCategoria tipoCategoria) {
-        return getPersistencia().buscarPorConsultaNativa("SELECT * FROM CATEGORIAMOVIMIENTO CM WHERE CM.idTipoCategoria = ? ",
-                CategoriaMovimiento.class, tipoCategoria.getId());
+        return getIngresosVsEgresosDAO().obtenerIngresosEgresos();
     }
 
 }
